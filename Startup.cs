@@ -18,6 +18,7 @@ namespace WillTheAirKillMe
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            Console.WriteLine(Configuration["api-key"]);
         }
 
         public IConfiguration Configuration { get; }
@@ -26,9 +27,11 @@ namespace WillTheAirKillMe
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+           
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+            services.AddSingleton<AirQualityService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

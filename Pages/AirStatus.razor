@@ -1,0 +1,21 @@
+@using WillTheAirKillMe.Data
+@inject AirQualityService AirService
+
+<h1></h1>
+@if (AirQuality == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+<h1>@AirQuality.Category.Message</h1>
+}
+
+
+@code {
+    private AirQualityReading AirQuality;
+    protected override async Task OnInitializedAsync()
+    {
+       AirQuality = await AirService.GetQualityReading();
+    }
+}
