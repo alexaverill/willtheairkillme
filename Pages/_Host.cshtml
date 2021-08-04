@@ -15,6 +15,17 @@
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link href="css/site.css" rel="stylesheet" />
     <link href="WillTheAirKillMe.styles.css" rel="stylesheet" />
+    <script>
+    window.getLocation = async () => {
+    const location = await new Promise((resolve,reject)=>{
+        navigator.geolocation.getCurrentPosition(resolve,reject);
+    }).then((data)=>{
+        return data.coords;
+    })
+    return {Latitude:location.latitude,Longitude:location.longitude}
+    };
+
+    </script>
 </head>
 <body>
     <component type="typeof(App)" render-mode="ServerPrerendered" />

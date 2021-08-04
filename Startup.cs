@@ -18,7 +18,6 @@ namespace WillTheAirKillMe
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            Console.WriteLine(Configuration["api-key"]);
         }
 
         public IConfiguration Configuration { get; }
@@ -30,7 +29,6 @@ namespace WillTheAirKillMe
            
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<AirQualityService>();
         }
 

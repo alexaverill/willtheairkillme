@@ -21,7 +21,7 @@ namespace WillTheAirKillMe.Data
                 case 6:
                     return "6";
                 default:
-                    return "Meow";
+                    return "Who Knows!";
             }
         }
         set{}

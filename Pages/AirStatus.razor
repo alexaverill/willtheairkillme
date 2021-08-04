@@ -1,6 +1,6 @@
 @using WillTheAirKillMe.Data
 @inject AirQualityService AirService
-
+@inject IJSRuntime JS
 <h1></h1>
 @if (AirQuality == null)
 {
@@ -8,14 +8,20 @@
 }
 else
 {
-<h1>@AirQuality.Category.Message</h1>
+    <h1>@AirQuality.Category.Message</h1>
 }
 
 
 @code {
     private AirQualityReading AirQuality;
-    protected override async Task OnInitializedAsync()
+    protected override async Task<Task> OnAfterRenderAsync(bool firstRender)
     {
-       AirQuality = await AirService.GetQualityReading();
+        if (firstRender)
+        {
+            var location = await JS.InvokeAsync<Geolocation>("getLocation");
+            AirQuality = await AirService.GetQualityReading(location);
+            this.StateHasChanged();
+        }
+        return base.OnAfterRenderAsync(firstRender);
     }
 }

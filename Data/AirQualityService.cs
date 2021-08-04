@@ -16,10 +16,20 @@ namespace WillTheAirKillMe.Data
             configuration = _configuration;
             client = new HttpClient();
         }
-        public async Task<AirQualityReading> GetQualityReading()
+        public async Task<AirQualityReading> GetQualityReading(int zipCode)
         {
             var ApiKey = configuration["api-key"];
-             var response = await client.GetStringAsync("https://www.airnowapi.org/aq/observation/zipCode/current/?format=application/json&zipCode=55117&distance=25&API_KEY="+ApiKey);
+            var url =$"https://www.airnowapi.org/aq/observation/zipCode/current/?format=application/json&zipCode={zipCode}&distance=25&API_KEY="+ApiKey;
+            return await GetAirQuality(url);
+        }
+        public async Task<AirQualityReading> GetQualityReading(Geolocation location){
+            var ApiKey = configuration["api-key"];
+            var url = $"https://www.airnowapi.org/aq/observation/latLong/current/?format=application/json&latitude={location.Latitude}&longitude={location.Longitude}&distance=25&API_KEY={ApiKey}";
+            return await GetAirQuality(url);
+        }
+        private async Task<AirQualityReading> GetAirQuality(string url){
+
+             var response = await client.GetStringAsync(url);
            var json = JsonConvert.DeserializeObject<List<AirQualityReading>>(response);
            var returnedReading = json[0];
            for(var x =1; x <json.Count; x++){
